@@ -11,7 +11,7 @@ print(TOKEN)
 @client.event
 async def on_ready():
     # api-endpoint
-    URL = "https://knowi.com/api/data/ipE4xJhLBkn8H8jisFisAdHKvepFR5I4bGzRySZ2aaXlJgie?entityName=Latest%20Day%20County%20Level%20Data&exportFormat=json&c9SqlFilter=select%20*%20where%20County%20like%20Onondaga"
+    URL = "https://knowi.com/api/data/ipE4xJhLBkn8H8jisFisAdHKvepFR5I4bGzRySZ2aaXlJgie"
 
     # location given here
     entityName = "Raw County level Data"
