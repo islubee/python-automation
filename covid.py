@@ -37,8 +37,10 @@ async def on_ready():
 
     # extracting data in json format
     data = r.json()
-    deaths = data[1]["values"]
-    confirmedCases = data[0]["values"]
+    deaths = [e["values"] for e in data
+        if e["Type"] == "Deaths"]
+    confirmedCases = [e["values"] for e in data
+        if e["Type"] == "Confirmed"]
     today = date.today()
     channel = client.get_channel(778791896793219103)
     embed = discord.Embed(title="COVID STATS", description=str(today)) #,color=Hex code
