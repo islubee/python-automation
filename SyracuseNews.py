@@ -14,14 +14,21 @@ import os
 import discord
 from dotenv import load_dotenv
 import requests
-import MySQLdb
+#import MySQLdb
 from discord.ext.tasks import loop
 
 
+#Initialize discord client
+client = discord.Client() 
 
-client = discord.Client()
-load_dotenv()
+#default directory for .env file is the current directory
+#if you set .env in different directory, put the directory address load_dotenv("directory_of_.env)
+load_dotenv() 
+
+#take environment variables from .env.
 TOKEN = os.getenv('DISCORD_TOKEN')
+
+#To strip HTML tags 
 def _remove_html_tags(html):
     p = re.compile(r'<[^<]*?/?>')
     return p.sub('', html)
@@ -29,6 +36,7 @@ def _remove_html_tags(html):
 if hasattr(ssl, '_create_unverified_context'):
     ssl._create_default_https_context = ssl._create_unverified_context
 
+#Create request and open URL to read
 _opener = urllib2.build_opener()
 _opener.addheaders = [('User-agent', 'Mozilla/5.0')]
 _events_calendar = {}
@@ -41,6 +49,8 @@ logging.basicConfig(
 )
 
 html = _opener.open(_url).read()
+
+#Find articles and obtain neccessary information such as title, link, publish date..
 articles = []
 uls = BeautifulSoup(html, "html.parser").html.body.findAll('article')
 for x in uls:
@@ -50,11 +60,11 @@ for x in uls:
   if ((atetime_object.hour == (datetime.today()- timedelta(hours=5)).hour) and (atetime_object.day == (datetime.today()- timedelta(hours=5)).day)) :
         articles.append({'header':x.attrs['data-social-hed'],'link':x.attrs['data-source'],'thumb':x.attrs['data-image-thumb'],'publishedOnRaw':int(x.attrs['data-publishedon']), 'id': x.attrs['id']})
 
-#print((datetime.today()- timedelta(hours=5)).day)
+#Send articles to discord
 if (len(articles) >= 1):
     @loop(count=1)
     async def send_articles():
-        channel = client.get_channel(778406469979602954)
+        channel = client.get_channel(#############)
         for article in articles:
             publishedOnRaw = article['publishedOnRaw']
             publishedOn = (datetime.fromtimestamp(publishedOnRaw) - timedelta(hours=5))
