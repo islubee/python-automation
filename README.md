@@ -1,4 +1,4 @@
-# Discord-Bots
+# Python-Automation
 Bots for Discord to send 
 - Daily Covid stats for a county
 - Top articles from Syracuse.com
